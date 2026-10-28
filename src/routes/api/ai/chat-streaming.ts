@@ -1,5 +1,5 @@
 import { chat, toServerSentEventsResponse } from "@tanstack/ai";
-import { vercelGatewayText } from "@tanstack/ai-vercel-gateway";
+import { claudeCodeText } from "@tanstack/ai-claude-code";
 import { defineSandbox, defineWorkspace, githubRepo, withSandbox } from "@tanstack/ai-sandbox";
 import { vercelSandbox } from "@tanstack/ai-sandbox-vercel";
 
@@ -11,10 +11,7 @@ export const Route = createFileRoute("/api/ai/chat-streaming")({
       POST: async ({ request }) => {
         const repoSandbox = defineSandbox({
           id: "repo-agent",
-          provider: vercelSandbox({
-            projectId: "tanstack-ai-sandboxes-blog-post",
-            teamId: "adam-rackis",
-          }),
+          provider: vercelSandbox({}),
           workspace: defineWorkspace({
             source: githubRepo({ repo: "arackaf/tanstack-ai-sandboxes-blog-post" }),
             setup: ["npm install"],
@@ -24,7 +21,7 @@ export const Route = createFileRoute("/api/ai/chat-streaming")({
         const { messages, threadId } = await request.json();
 
         const stream = chat({
-          adapter: vercelGatewayText("anthropic/claude-opus-5"),
+          adapter: claudeCodeText("claude-opus-4-8"),
           messages,
           threadId,
           middleware: [withSandbox(repoSandbox)],
