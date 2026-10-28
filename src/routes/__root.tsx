@@ -62,6 +62,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               </li>
               <li>
                 <Link
+                  to="/java"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  Java
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/javascript"
                   className="block rounded px-3 py-2 hover:bg-gray-200"
                   activeProps={{ className: "bg-gray-200 font-semibold" }}

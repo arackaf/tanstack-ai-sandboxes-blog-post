@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CppRouteImport } from './routes/cpp'
+import { Route as JavaRouteImport } from './routes/java'
 import { Route as JavascriptRouteImport } from './routes/javascript'
 import { Route as ApiAiChatStreamingRouteImport } from './routes/api/ai/chat-streaming'
 
@@ -30,6 +31,11 @@ const CppRoute = CppRouteImport.update({
   path: '/cpp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JavaRoute = JavaRouteImport.update({
+  id: '/java',
+  path: '/java',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JavascriptRoute = JavascriptRouteImport.update({
   id: '/javascript',
   path: '/javascript',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/cpp': typeof CppRoute
+  '/java': typeof JavaRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/cpp': typeof CppRoute
+  '/java': typeof JavaRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
 }
@@ -60,19 +68,23 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/cpp': typeof CppRoute
+  '/java': typeof JavaRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/cpp' | '/javascript' | '/api/ai/chat-streaming'
+  fullPaths:
+    '/' | '/admin' | '/cpp' | '/java' | '/javascript' | '/api/ai/chat-streaming'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/cpp' | '/javascript' | '/api/ai/chat-streaming'
+  to:
+    '/' | '/admin' | '/cpp' | '/java' | '/javascript' | '/api/ai/chat-streaming'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/cpp'
+    | '/java'
     | '/javascript'
     | '/api/ai/chat-streaming'
   fileRoutesById: FileRoutesById
@@ -81,6 +93,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   CppRoute: typeof CppRoute
+  JavaRoute: typeof JavaRoute
   JavascriptRoute: typeof JavascriptRoute
   ApiAiChatStreamingRoute: typeof ApiAiChatStreamingRoute
 }
@@ -108,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/java': {
+      id: '/java'
+      path: '/java'
+      fullPath: '/java'
+      preLoaderRoute: typeof JavaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/javascript': {
       id: '/javascript'
       path: '/javascript'
@@ -129,18 +149,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   CppRoute: CppRoute,
+  JavaRoute: JavaRoute,
   JavascriptRoute: JavascriptRoute,
   ApiAiChatStreamingRoute: ApiAiChatStreamingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
