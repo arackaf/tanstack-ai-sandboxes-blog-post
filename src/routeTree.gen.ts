@@ -8,97 +8,120 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as AdminRouteImport } from "./routes/admin";
-import { Route as CppRouteImport } from "./routes/cpp";
-import { Route as JavascriptRouteImport } from "./routes/javascript";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CppRouteImport } from './routes/cpp'
+import { Route as JavascriptRouteImport } from './routes/javascript'
+import { Route as ApiAiChatStreamingRouteImport } from './routes/api/ai/chat-streaming'
 
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AdminRoute = AdminRouteImport.update({
-  id: "/admin",
-  path: "/admin",
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const CppRoute = CppRouteImport.update({
-  id: "/cpp",
-  path: "/cpp",
+  id: '/cpp',
+  path: '/cpp',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const JavascriptRoute = JavascriptRouteImport.update({
-  id: "/javascript",
-  path: "/javascript",
+  id: '/javascript',
+  path: '/javascript',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
+const ApiAiChatStreamingRoute = ApiAiChatStreamingRouteImport.update({
+  id: '/api/ai/chat-streaming',
+  path: '/api/ai/chat-streaming',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/admin": typeof AdminRoute;
-  "/cpp": typeof CppRoute;
-  "/javascript": typeof JavascriptRoute;
+  '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/cpp': typeof CppRoute
+  '/javascript': typeof JavascriptRoute
+  '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/admin": typeof AdminRoute;
-  "/cpp": typeof CppRoute;
-  "/javascript": typeof JavascriptRoute;
+  '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/cpp': typeof CppRoute
+  '/javascript': typeof JavascriptRoute
+  '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/admin": typeof AdminRoute;
-  "/cpp": typeof CppRoute;
-  "/javascript": typeof JavascriptRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/cpp': typeof CppRoute
+  '/javascript': typeof JavascriptRoute
+  '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/admin" | "/cpp" | "/javascript";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/admin" | "/cpp" | "/javascript";
-  id: "__root__" | "/" | "/admin" | "/cpp" | "/javascript";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/admin' | '/cpp' | '/javascript' | '/api/ai/chat-streaming'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/admin' | '/cpp' | '/javascript' | '/api/ai/chat-streaming'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/cpp'
+    | '/javascript'
+    | '/api/ai/chat-streaming'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AdminRoute: typeof AdminRoute;
-  CppRoute: typeof CppRoute;
-  JavascriptRoute: typeof JavascriptRoute;
+  IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  CppRoute: typeof CppRoute
+  JavascriptRoute: typeof JavascriptRoute
+  ApiAiChatStreamingRoute: typeof ApiAiChatStreamingRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/admin": {
-      id: "/admin";
-      path: "/admin";
-      fullPath: "/admin";
-      preLoaderRoute: typeof AdminRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/cpp": {
-      id: "/cpp";
-      path: "/cpp";
-      fullPath: "/cpp";
-      preLoaderRoute: typeof CppRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/javascript": {
-      id: "/javascript";
-      path: "/javascript";
-      fullPath: "/javascript";
-      preLoaderRoute: typeof JavascriptRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cpp': {
+      id: '/cpp'
+      path: '/cpp'
+      fullPath: '/cpp'
+      preLoaderRoute: typeof CppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/javascript': {
+      id: '/javascript'
+      path: '/javascript'
+      fullPath: '/javascript'
+      preLoaderRoute: typeof JavascriptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ai/chat-streaming': {
+      id: '/api/ai/chat-streaming'
+      path: '/api/ai/chat-streaming'
+      fullPath: '/api/ai/chat-streaming'
+      preLoaderRoute: typeof ApiAiChatStreamingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,7 +130,17 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
-};
+  ApiAiChatStreamingRoute: ApiAiChatStreamingRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
