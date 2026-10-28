@@ -10,19 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminDaytonaRouteImport } from './routes/admin-daytona'
+import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
-import { Route as ApiAiChatStreamingRouteImport } from './routes/api/ai/chat-streaming'
+import { Route as ApiAiDaytonaSandboxRouteImport } from './routes/api/ai/daytona-sandbox'
+import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const AdminDaytonaRoute = AdminDaytonaRouteImport.update({
+  id: '/admin-daytona',
+  path: '/admin-daytona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminVercelRoute = AdminVercelRouteImport.update({
+  id: '/admin-vercel',
+  path: '/admin-vercel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CppRoute = CppRouteImport.update({
@@ -35,54 +42,83 @@ const JavascriptRoute = JavascriptRouteImport.update({
   path: '/javascript',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAiChatStreamingRoute = ApiAiChatStreamingRouteImport.update({
-  id: '/api/ai/chat-streaming',
-  path: '/api/ai/chat-streaming',
+const ApiAiDaytonaSandboxRoute = ApiAiDaytonaSandboxRouteImport.update({
+  id: '/api/ai/daytona-sandbox',
+  path: '/api/ai/daytona-sandbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
+  id: '/api/ai/vercel-sandbox',
+  path: '/api/ai/vercel-sandbox',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin-daytona': typeof AdminDaytonaRoute
+  '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
-  '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
+  '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
+  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin-daytona': typeof AdminDaytonaRoute
+  '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
-  '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
+  '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
+  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin-daytona': typeof AdminDaytonaRoute
+  '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
-  '/api/ai/chat-streaming': typeof ApiAiChatStreamingRoute
+  '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
+  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/cpp' | '/javascript' | '/api/ai/chat-streaming'
+  fullPaths:
+    | '/'
+    | '/admin-daytona'
+    | '/admin-vercel'
+    | '/cpp'
+    | '/javascript'
+    | '/api/ai/daytona-sandbox'
+    | '/api/ai/vercel-sandbox'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/cpp' | '/javascript' | '/api/ai/chat-streaming'
+  to:
+    | '/'
+    | '/admin-daytona'
+    | '/admin-vercel'
+    | '/cpp'
+    | '/javascript'
+    | '/api/ai/daytona-sandbox'
+    | '/api/ai/vercel-sandbox'
   id:
     | '__root__'
     | '/'
-    | '/admin'
+    | '/admin-daytona'
+    | '/admin-vercel'
     | '/cpp'
     | '/javascript'
-    | '/api/ai/chat-streaming'
+    | '/api/ai/daytona-sandbox'
+    | '/api/ai/vercel-sandbox'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminDaytonaRoute: typeof AdminDaytonaRoute
+  AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
   JavascriptRoute: typeof JavascriptRoute
-  ApiAiChatStreamingRoute: typeof ApiAiChatStreamingRoute
+  ApiAiDaytonaSandboxRoute: typeof ApiAiDaytonaSandboxRoute
+  ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,11 +130,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/admin-daytona': {
+      id: '/admin-daytona'
+      path: '/admin-daytona'
+      fullPath: '/admin-daytona'
+      preLoaderRoute: typeof AdminDaytonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-vercel': {
+      id: '/admin-vercel'
+      path: '/admin-vercel'
+      fullPath: '/admin-vercel'
+      preLoaderRoute: typeof AdminVercelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cpp': {
@@ -115,11 +158,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JavascriptRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/ai/chat-streaming': {
-      id: '/api/ai/chat-streaming'
-      path: '/api/ai/chat-streaming'
-      fullPath: '/api/ai/chat-streaming'
-      preLoaderRoute: typeof ApiAiChatStreamingRouteImport
+    '/api/ai/daytona-sandbox': {
+      id: '/api/ai/daytona-sandbox'
+      path: '/api/ai/daytona-sandbox'
+      fullPath: '/api/ai/daytona-sandbox'
+      preLoaderRoute: typeof ApiAiDaytonaSandboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ai/vercel-sandbox': {
+      id: '/api/ai/vercel-sandbox'
+      path: '/api/ai/vercel-sandbox'
+      fullPath: '/api/ai/vercel-sandbox'
+      preLoaderRoute: typeof ApiAiVercelSandboxRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -127,10 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminDaytonaRoute: AdminDaytonaRoute,
+  AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
-  ApiAiChatStreamingRoute: ApiAiChatStreamingRoute,
+  ApiAiDaytonaSandboxRoute: ApiAiDaytonaSandboxRoute,
+  ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

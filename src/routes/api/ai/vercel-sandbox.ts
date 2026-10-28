@@ -5,7 +5,7 @@ import { vercelSandbox } from "@tanstack/ai-sandbox-vercel";
 
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/ai/chat-streaming")({
+export const Route = createFileRoute("/api/ai/vercel-sandbox")({
   server: {
     handlers: {
       POST: async ({ request }) => {

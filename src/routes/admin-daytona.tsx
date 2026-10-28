@@ -4,11 +4,11 @@ import { Loader2 } from "lucide-react";
 
 import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 
-export const Route = createFileRoute("/admin")({ component: Admin });
+export const Route = createFileRoute("/admin-daytona")({ component: Admin });
 
 function Admin() {
   const { messages, sendMessage, isLoading } = useChat({
-    connection: fetchServerSentEvents("/api/ai/chat-streaming"),
+    connection: fetchServerSentEvents("/api/ai/daytona-sandbox"),
     threadId: "1",
   });
 

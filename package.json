@@ -18,6 +18,8 @@
     "@tanstack/ai-claude-code": "^1.0.0",
     "@tanstack/ai-react": "^1.0.0",
     "@tanstack/ai-sandbox": "^1.0.0",
+    "@tanstack/ai-sandbox-cloudflare": "^1.0.0",
+    "@tanstack/ai-sandbox-daytona": "^1.0.0",
     "@tanstack/ai-sandbox-vercel": "^1.0.0",
     "@tanstack/ai-vercel-gateway": "^1.0.0",
     "@tanstack/react-devtools": "0.10.13",
