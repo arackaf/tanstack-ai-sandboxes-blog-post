@@ -1,6 +1,6 @@
 import { chat, toServerSentEventsResponse } from "@tanstack/ai";
 import { claudeCodeText } from "@tanstack/ai-claude-code";
-import { defineSandbox, defineWorkspace, githubRepo, withSandbox } from "@tanstack/ai-sandbox";
+import { createSecrets, defineSandbox, defineWorkspace, githubRepo, withSandbox } from "@tanstack/ai-sandbox";
 import { vercelSandbox } from "@tanstack/ai-sandbox-vercel";
 
 import { createFileRoute } from "@tanstack/react-router";
@@ -14,8 +14,13 @@ export const Route = createFileRoute("/api/ai/chat-streaming")({
           provider: vercelSandbox({}),
           workspace: defineWorkspace({
             source: githubRepo({ repo: "arackaf/tanstack-ai-sandboxes-blog-post" }),
-            setup: ["npm install"],
+            setup: ["npm install", "sudo npm install -g @anthropic-ai/claude-code", "npm install"],
+            secrets: createSecrets({
+              ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY ?? "",
+              GH_TOKEN: process.env.GH_TOKEN ?? "",
+            }),
           }),
+          lifecycle: { reuse: "thread" },
         });
 
         const { messages, threadId } = await request.json();
