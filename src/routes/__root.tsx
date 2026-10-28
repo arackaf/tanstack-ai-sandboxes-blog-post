@@ -1,5 +1,6 @@
 import {
   HeadContent,
+  Link,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
@@ -47,7 +48,31 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <div className="flex min-h-screen">
+          <nav className="w-48 shrink-0 border-r border-gray-200 bg-gray-50 p-4">
+            <ul className="flex flex-col gap-1">
+              <li>
+                <Link
+                  to="/cpp"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  C++
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/javascript"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  JavaScript
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <main className="flex-1">{children}</main>
+        </div>
         <TanStackDevtools
           config={{
             position: "bottom-right",
