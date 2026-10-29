@@ -33,6 +33,8 @@ export const Route = createFileRoute("/api/ai/vercel-sandbox")({
           lifecycle: { reuse: "thread" },
         });
 
+        //repoSandbox.destroy({threadId: "", runId: "" })
+
         const { messages, threadId } = await request.json();
 
         const stream = chat({
