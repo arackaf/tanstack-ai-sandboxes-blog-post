@@ -188,6 +188,34 @@ function PeopleComponent() {
 
 Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
 
+## Consuming the API from C#
+
+The API routes described above are plain HTTP endpoints, so you can call them from any language. Here is how to consume the `/api/hello` route from a C# client using `HttpClient`.
+
+```csharp
+using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+
+public record HelloResponse(string Message);
+
+public class Program
+{
+    private static readonly HttpClient Client = new()
+    {
+        BaseAddress = new Uri("http://localhost:3000"),
+    };
+
+    public static async Task Main()
+    {
+        HelloResponse? response = await Client.GetFromJsonAsync<HelloResponse>("/api/hello");
+        Console.WriteLine(response?.Message);
+    }
+}
+```
+
+`GetFromJsonAsync` deserializes the JSON response (`{ "message": "Hello, World!" }`) into the `HelloResponse` record using `System.Net.Http.Json`, which ships with .NET 5 and later.
 
 
 # Learn More
