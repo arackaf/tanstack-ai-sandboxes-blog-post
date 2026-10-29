@@ -2,11 +2,19 @@ import { bigint, boolean, index, integer, jsonb, pgTable, primaryKey, text } fro
 import type { ModelMessage, TokenUsage } from "@tanstack/ai";
 import type { InterruptRecord, RunStatus } from "@tanstack/ai-persistence";
 
-export const chatThreads = pgTable("chat_threads", {
-  threadId: text("thread_id").primaryKey(),
-  messagesJson: jsonb("messages_json").$type<Array<ModelMessage>>().notNull(),
-  updatedAt: bigint("updated_at", { mode: "number" }).notNull(),
-});
+export const chatThreads = pgTable(
+  "chat_threads",
+  {
+    threadId: text("thread_id").primaryKey(),
+    messagesJson: jsonb("messages_json").$type<Array<ModelMessage>>().notNull(),
+    updatedAt: bigint("updated_at", { mode: "number" }).notNull(),
+  },
+  (table) => [
+    // look up thread, and also by last updated
+    index("chat_threads_thread_id").on(table.threadId),
+    index("chat_threads_updated_at").on(table.updatedAt),
+  ],
+);
 
 export const chatRuns = pgTable(
   "chat_runs",
