@@ -10,11 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdaRouteImport } from './routes/ada'
 import { Route as AdminDaytonaRouteImport } from './routes/admin-daytona'
 import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
+import { Route as JavaRouteImport } from './routes/java'
 import { Route as JavascriptRouteImport } from './routes/javascript'
+import { Route as SwiftRouteImport } from './routes/swift'
 import { Route as ApiAiDaytonaSandboxRouteImport } from './routes/api/ai/daytona-sandbox'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
 import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
@@ -22,6 +25,11 @@ import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-s
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdaRoute = AdaRouteImport.update({
+  id: '/ada',
+  path: '/ada',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminDaytonaRoute = AdminDaytonaRouteImport.update({
@@ -44,9 +52,19 @@ const CppRoute = CppRouteImport.update({
   path: '/cpp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JavaRoute = JavaRouteImport.update({
+  id: '/java',
+  path: '/java',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JavascriptRoute = JavascriptRouteImport.update({
   id: '/javascript',
   path: '/javascript',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SwiftRoute = SwiftRouteImport.update({
+  id: '/swift',
+  path: '/swift',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAiDaytonaSandboxRoute = ApiAiDaytonaSandboxRouteImport.update({
@@ -67,22 +85,28 @@ const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-daytona': typeof AdminDaytonaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
+  '/java': typeof JavaRoute
   '/javascript': typeof JavascriptRoute
+  '/swift': typeof SwiftRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-daytona': typeof AdminDaytonaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
+  '/java': typeof JavaRoute
   '/javascript': typeof JavascriptRoute
+  '/swift': typeof SwiftRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
@@ -90,11 +114,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-daytona': typeof AdminDaytonaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
+  '/java': typeof JavaRoute
   '/javascript': typeof JavascriptRoute
+  '/swift': typeof SwiftRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
@@ -103,33 +130,42 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ada'
     | '/admin-daytona'
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
+    | '/java'
     | '/javascript'
+    | '/swift'
     | '/api/ai/daytona-sandbox'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ada'
     | '/admin-daytona'
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
+    | '/java'
     | '/javascript'
+    | '/swift'
     | '/api/ai/daytona-sandbox'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   id:
     | '__root__'
     | '/'
+    | '/ada'
     | '/admin-daytona'
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
+    | '/java'
     | '/javascript'
+    | '/swift'
     | '/api/ai/daytona-sandbox'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
@@ -137,11 +173,14 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdaRoute: typeof AdaRoute
   AdminDaytonaRoute: typeof AdminDaytonaRoute
   AdminRailwayRoute: typeof AdminRailwayRoute
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
+  JavaRoute: typeof JavaRoute
   JavascriptRoute: typeof JavascriptRoute
+  SwiftRoute: typeof SwiftRoute
   ApiAiDaytonaSandboxRoute: typeof ApiAiDaytonaSandboxRoute
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
   ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
@@ -154,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ada': {
+      id: '/ada'
+      path: '/ada'
+      fullPath: '/ada'
+      preLoaderRoute: typeof AdaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin-daytona': {
@@ -184,11 +230,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/java': {
+      id: '/java'
+      path: '/java'
+      fullPath: '/java'
+      preLoaderRoute: typeof JavaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/javascript': {
       id: '/javascript'
       path: '/javascript'
       fullPath: '/javascript'
       preLoaderRoute: typeof JavascriptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/swift': {
+      id: '/swift'
+      path: '/swift'
+      fullPath: '/swift'
+      preLoaderRoute: typeof SwiftRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ai/daytona-sandbox': {
@@ -217,11 +277,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdaRoute: AdaRoute,
   AdminDaytonaRoute: AdminDaytonaRoute,
   AdminRailwayRoute: AdminRailwayRoute,
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
+  JavaRoute: JavaRoute,
   JavascriptRoute: JavascriptRoute,
+  SwiftRoute: SwiftRoute,
   ApiAiDaytonaSandboxRoute: ApiAiDaytonaSandboxRoute,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
   ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
@@ -229,12 +292,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

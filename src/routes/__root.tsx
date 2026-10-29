@@ -53,6 +53,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <ul className="flex flex-col gap-1">
               <li>
                 <Link
+                  to="/ada"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  Ada
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/cpp"
                   className="block rounded px-3 py-2 hover:bg-gray-200"
                   activeProps={{ className: "bg-gray-200 font-semibold" }}
@@ -62,11 +71,29 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               </li>
               <li>
                 <Link
+                  to="/java"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  Java
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/javascript"
                   className="block rounded px-3 py-2 hover:bg-gray-200"
                   activeProps={{ className: "bg-gray-200 font-semibold" }}
                 >
                   JavaScript
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/swift"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  Swift
                 </Link>
               </li>
             </ul>
