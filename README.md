@@ -189,6 +189,42 @@ function PeopleComponent() {
 Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
 
 
+## Java
+
+This is a JavaScript/TypeScript project, but it pairs well with a Java backend (Spring Boot, Quarkus, etc.) when you want to keep your business logic on the JVM and use TanStack Start for the frontend.
+
+### Connecting to a Java Backend
+
+Point your data fetching at the Java service. During development, proxy API requests to it from Vite so you avoid CORS issues:
+
+```ts
+// vite.config.ts
+export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080', // your Java server
+        changeOrigin: true,
+      },
+    },
+  },
+})
+```
+
+Then fetch from the Java API in a loader or server function just like any other endpoint:
+
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/users')({
+  loader: async () => {
+    const response = await fetch('/api/users')
+    return response.json()
+  },
+})
+```
+
+For production, deploy the Java service separately and set its base URL via an environment variable, or put both behind a reverse proxy so the frontend and API share an origin.
 
 # Learn More
 
