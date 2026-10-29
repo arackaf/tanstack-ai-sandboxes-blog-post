@@ -190,6 +190,14 @@ Loaders simplify your data fetching logic dramatically. Check out more informati
 
 
 
+## Ada
+
+[Ada](https://www.adaic.org/) is a statically typed, structured, imperative programming language designed for reliability, maintainability, and safety-critical systems. It features strong typing, built-in concurrency (tasking), and contract-based programming, which makes it a popular choice for aerospace, defense, and other high-integrity domains.
+
+## Java
+
+[Java](https://www.java.com/) is a class-based, object-oriented programming language that runs on the Java Virtual Machine (JVM), giving it broad "write once, run anywhere" portability. Its mature ecosystem, strong tooling, and vast standard library make it a common choice for enterprise backends, Android apps, and large-scale distributed systems.
+
 # Learn More
 
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
