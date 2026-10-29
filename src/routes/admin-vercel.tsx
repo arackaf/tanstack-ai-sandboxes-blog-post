@@ -47,7 +47,7 @@ const AgentChat: FC<AgentChatProps> = props => {
   return (
     <div className="p-8 flex flex-col gap-4">
       <label htmlFor="agent-prompt" className="block text-lg font-semibold">
-        Spin off cloud agent
+        Spin off cloud agent {threadId}
       </label>
       <textarea
         ref={textareaRef}
