@@ -11,10 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminDaytonaRouteImport } from './routes/admin-daytona'
+import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
 import { Route as ApiAiDaytonaSandboxRouteImport } from './routes/api/ai/daytona-sandbox'
+import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
 import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
 
 const IndexRoute = IndexRouteImport.update({
@@ -25,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminDaytonaRoute = AdminDaytonaRouteImport.update({
   id: '/admin-daytona',
   path: '/admin-daytona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRailwayRoute = AdminRailwayRouteImport.update({
+  id: '/admin-railway',
+  path: '/admin-railway',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminVercelRoute = AdminVercelRouteImport.update({
@@ -47,6 +54,11 @@ const ApiAiDaytonaSandboxRoute = ApiAiDaytonaSandboxRouteImport.update({
   path: '/api/ai/daytona-sandbox',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiRailwaySandboxRoute = ApiAiRailwaySandboxRouteImport.update({
+  id: '/api/ai/railway-sandbox',
+  path: '/api/ai/railway-sandbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
   id: '/api/ai/vercel-sandbox',
   path: '/api/ai/vercel-sandbox',
@@ -56,29 +68,35 @@ const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-daytona': typeof AdminDaytonaRoute
+  '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
+  '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-daytona': typeof AdminDaytonaRoute
+  '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
+  '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin-daytona': typeof AdminDaytonaRoute
+  '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
+  '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRouteTypes {
@@ -86,38 +104,46 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin-daytona'
+    | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
     | '/api/ai/daytona-sandbox'
+    | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin-daytona'
+    | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
     | '/api/ai/daytona-sandbox'
+    | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   id:
     | '__root__'
     | '/'
     | '/admin-daytona'
+    | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
     | '/api/ai/daytona-sandbox'
+    | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminDaytonaRoute: typeof AdminDaytonaRoute
+  AdminRailwayRoute: typeof AdminRailwayRoute
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
   JavascriptRoute: typeof JavascriptRoute
   ApiAiDaytonaSandboxRoute: typeof ApiAiDaytonaSandboxRoute
+  ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
   ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
 }
 
@@ -135,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-daytona'
       fullPath: '/admin-daytona'
       preLoaderRoute: typeof AdminDaytonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-railway': {
+      id: '/admin-railway'
+      path: '/admin-railway'
+      fullPath: '/admin-railway'
+      preLoaderRoute: typeof AdminRailwayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin-vercel': {
@@ -165,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAiDaytonaSandboxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai/railway-sandbox': {
+      id: '/api/ai/railway-sandbox'
+      path: '/api/ai/railway-sandbox'
+      fullPath: '/api/ai/railway-sandbox'
+      preLoaderRoute: typeof ApiAiRailwaySandboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/vercel-sandbox': {
       id: '/api/ai/vercel-sandbox'
       path: '/api/ai/vercel-sandbox'
@@ -178,10 +218,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminDaytonaRoute: AdminDaytonaRoute,
+  AdminRailwayRoute: AdminRailwayRoute,
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
   ApiAiDaytonaSandboxRoute: ApiAiDaytonaSandboxRoute,
+  ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
   ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
 }
 export const routeTree = rootRouteImport
