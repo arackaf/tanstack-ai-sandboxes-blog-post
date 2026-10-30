@@ -6,7 +6,7 @@ import { claudeCodeText } from "@tanstack/ai-claude-code";
 import { sandboxRailway } from "#/lib/railway-sandbox";
 import { chatPersistence } from "#/drizzle/chat-persistence";
 
-import { reconstructChat } from "@tanstack/ai-persistence";
+import { reconstructChat, withPersistence } from "@tanstack/ai-persistence";
 
 export const Route = createFileRoute("/api/ai/railway-sandbox")({
   server: {
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/api/ai/railway-sandbox")({
           adapter: claudeCodeText("claude-opus-4-8"),
           messages,
           threadId,
-          middleware: [withSandbox(sandboxRailway)],
+          middleware: [withPersistence(chatPersistence), withSandbox(sandboxRailway)],
         });
 
         return toServerSentEventsResponse(stream, {
