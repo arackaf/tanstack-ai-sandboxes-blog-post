@@ -11,7 +11,7 @@ export const Route = createFileRoute("/api/ai/vercel-sandbox")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const durability = memoryStream(request);
+        const durability = memoryStream(request, { firstChunkDeadlineMs: 1000 * 60 * 5 });
         if (durability.resumeFrom() !== null) {
           return resumeServerSentEventsResponse({ adapter: durability });
         }
@@ -19,12 +19,13 @@ export const Route = createFileRoute("/api/ai/vercel-sandbox")({
         return reconstructChat(chatPersistence, request);
       },
       POST: async ({ request }) => {
-        const { messages, threadId } = await request.json();
+        const { messages, threadId, runId } = await request.json();
 
         const stream = chat({
           adapter: claudeCodeText("claude-opus-4-8"),
           messages,
           threadId,
+          runId,
           middleware: [withPersistence(chatPersistence), withSandbox(sandboxVercel)],
         });
 
