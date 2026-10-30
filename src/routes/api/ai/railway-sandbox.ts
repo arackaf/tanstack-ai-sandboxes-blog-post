@@ -12,7 +12,7 @@ export const Route = createFileRoute("/api/ai/railway-sandbox")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const durability = memoryStream(request, { firstChunkDeadlineMs: 1000 * 60 * 5 });
+        const durability = memoryStream(request, { firstChunkDeadlineMs: 1000 * 5 });
         if (durability.resumeFrom() !== null) {
           return resumeServerSentEventsResponse({ adapter: durability });
         }

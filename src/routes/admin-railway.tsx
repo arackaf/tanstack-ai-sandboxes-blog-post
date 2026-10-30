@@ -1,4 +1,4 @@
-import { useRef, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
@@ -18,6 +18,17 @@ function Admin() {
   const sessions = Route.useLoaderData();
 
   const [threadId, setThreadId] = useState<string>("");
+  const [queryStringThreadId] = useState(() => {
+    if (typeof window === "undefined") return "";
+
+    const url = new URL(window.location.href);
+    return url.searchParams.get("threadId") || "";
+  });
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   function handleDelete(threadId: string) {
     deleteRailwaySession({ data: { threadId } });
@@ -42,6 +53,7 @@ function Admin() {
           </li>
         ))}
       </ul>
+      {queryStringThreadId && isClient ? <AgentChat threadId={queryStringThreadId} /> : null}
       {threadId ? <AgentChat threadId={threadId} /> : null}
       {agentCounts === 0 ? (
         <button type="button" className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700" onClick={() => setAgentCounts(cnt => cnt + 1)}>
