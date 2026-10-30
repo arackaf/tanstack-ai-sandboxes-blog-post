@@ -14,7 +14,7 @@ export const sandboxRailway = defineSandbox({
       GH_TOKEN: process.env.GH_TOKEN ?? "",
     }),
     instructions:
-      "To publish work: run `gh auth setup-git` once, then `git push -u origin <branch>` and `gh pr create`. GH_TOKEN is already in the environment.",
+      "Accomplish the user's request and create a pull request. To publish work: run `gh auth setup-git` once, then `git push -u origin <branch>` and `gh pr create`. GH_TOKEN is already in the environment.",
   }),
   lifecycle: { reuse: "thread" },
 });
