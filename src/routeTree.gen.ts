@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdaRouteImport } from './routes/ada'
 import { Route as AdminDaytonaRouteImport } from './routes/admin-daytona'
 import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
@@ -22,6 +23,11 @@ import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-s
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdaRoute = AdaRouteImport.update({
+  id: '/ada',
+  path: '/ada',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminDaytonaRoute = AdminDaytonaRouteImport.update({
@@ -67,6 +73,7 @@ const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-daytona': typeof AdminDaytonaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-daytona': typeof AdminDaytonaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-daytona': typeof AdminDaytonaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ada'
     | '/admin-daytona'
     | '/admin-railway'
     | '/admin-vercel'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ada'
     | '/admin-daytona'
     | '/admin-railway'
     | '/admin-vercel'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ada'
     | '/admin-daytona'
     | '/admin-railway'
     | '/admin-vercel'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdaRoute: typeof AdaRoute
   AdminDaytonaRoute: typeof AdminDaytonaRoute
   AdminRailwayRoute: typeof AdminRailwayRoute
   AdminVercelRoute: typeof AdminVercelRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ada': {
+      id: '/ada'
+      path: '/ada'
+      fullPath: '/ada'
+      preLoaderRoute: typeof AdaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin-daytona': {
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdaRoute: AdaRoute,
   AdminDaytonaRoute: AdminDaytonaRoute,
   AdminRailwayRoute: AdminRailwayRoute,
   AdminVercelRoute: AdminVercelRoute,
@@ -229,12 +250,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
