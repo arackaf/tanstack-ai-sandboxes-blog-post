@@ -17,7 +17,7 @@ import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
 import { Route as ApiAiDaytonaSandboxRouteImport } from './routes/api/ai/daytona-sandbox'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
-import { Route as ApiAiVercelSandboxIndexRouteImport } from './routes/api/ai/vercel-sandbox/index'
+import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -59,9 +59,9 @@ const ApiAiRailwaySandboxRoute = ApiAiRailwaySandboxRouteImport.update({
   path: '/api/ai/railway-sandbox',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAiVercelSandboxIndexRoute = ApiAiVercelSandboxIndexRouteImport.update({
-  id: '/api/ai/vercel-sandbox/',
-  path: '/api/ai/vercel-sandbox/',
+const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
+  id: '/api/ai/vercel-sandbox',
+  path: '/api/ai/vercel-sandbox',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -74,7 +74,7 @@ export interface FileRoutesByFullPath {
   '/javascript': typeof JavascriptRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
-  '/api/ai/vercel-sandbox/': typeof ApiAiVercelSandboxIndexRoute
+  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,7 +85,7 @@ export interface FileRoutesByTo {
   '/javascript': typeof JavascriptRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
-  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxIndexRoute
+  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,7 +97,7 @@ export interface FileRoutesById {
   '/javascript': typeof JavascriptRoute
   '/api/ai/daytona-sandbox': typeof ApiAiDaytonaSandboxRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
-  '/api/ai/vercel-sandbox/': typeof ApiAiVercelSandboxIndexRoute
+  '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,7 +110,7 @@ export interface FileRouteTypes {
     | '/javascript'
     | '/api/ai/daytona-sandbox'
     | '/api/ai/railway-sandbox'
-    | '/api/ai/vercel-sandbox/'
+    | '/api/ai/vercel-sandbox'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -132,7 +132,7 @@ export interface FileRouteTypes {
     | '/javascript'
     | '/api/ai/daytona-sandbox'
     | '/api/ai/railway-sandbox'
-    | '/api/ai/vercel-sandbox/'
+    | '/api/ai/vercel-sandbox'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,7 +144,7 @@ export interface RootRouteChildren {
   JavascriptRoute: typeof JavascriptRoute
   ApiAiDaytonaSandboxRoute: typeof ApiAiDaytonaSandboxRoute
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
-  ApiAiVercelSandboxIndexRoute: typeof ApiAiVercelSandboxIndexRoute
+  ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -205,11 +205,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAiRailwaySandboxRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/ai/vercel-sandbox/': {
-      id: '/api/ai/vercel-sandbox/'
+    '/api/ai/vercel-sandbox': {
+      id: '/api/ai/vercel-sandbox'
       path: '/api/ai/vercel-sandbox'
-      fullPath: '/api/ai/vercel-sandbox/'
-      preLoaderRoute: typeof ApiAiVercelSandboxIndexRouteImport
+      fullPath: '/api/ai/vercel-sandbox'
+      preLoaderRoute: typeof ApiAiVercelSandboxRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -224,7 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   JavascriptRoute: JavascriptRoute,
   ApiAiDaytonaSandboxRoute: ApiAiDaytonaSandboxRoute,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
-  ApiAiVercelSandboxIndexRoute: ApiAiVercelSandboxIndexRoute,
+  ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

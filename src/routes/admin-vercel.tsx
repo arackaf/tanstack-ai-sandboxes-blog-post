@@ -5,13 +5,47 @@ import { v4 as uuidv4 } from "uuid";
 
 import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
 
-export const Route = createFileRoute("/admin-vercel")({ component: Admin });
+import { readSessions } from "../server-functions/readSessions";
+import { deleteVercelSession } from "#/server-functions/deleteVercelSession";
+
+export const Route = createFileRoute("/admin-vercel")({
+  component: Admin,
+  loader: () => readSessions(),
+});
 
 function Admin() {
   const [agentCounts, setAgentCounts] = useState<number>(1);
+  const sessions = Route.useLoaderData();
+
+  function handleDelete(threadId: string) {
+    deleteVercelSession({ data: { threadId } });
+  }
 
   return (
     <div>
+      <ul className="p-8 flex flex-col gap-2 max-w-2xl">
+        {sessions.map(session => (
+          <li
+            key={session.threadId}
+            className="flex items-center gap-4 rounded border border-gray-300 px-4 py-2"
+          >
+            <span className="flex-1 truncate">{session.preview}</span>
+            <button
+              type="button"
+              className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700"
+            >
+              Load
+            </button>
+            <button
+              type="button"
+              className="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
+              onClick={() => handleDelete(session.threadId)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
       {Array.from({ length: agentCounts }, (_, idx) => idx)
         .reverse()
         .map(id => (
@@ -32,6 +66,7 @@ const AgentChat: FC<AgentChatProps> = props => {
   const { messages, sendMessage, isLoading } = useChat({
     connection: fetchServerSentEvents("/api/ai/vercel-sandbox"),
     threadId,
+    persistence: true,
   });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);

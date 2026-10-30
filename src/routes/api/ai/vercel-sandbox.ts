@@ -7,7 +7,7 @@ import { withSandbox } from "@tanstack/ai-sandbox";
 
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/ai/vercel-sandbox/")({
+export const Route = createFileRoute("/api/ai/vercel-sandbox")({
   server: {
     handlers: {
       POST: async ({ request }) => {

@@ -12,7 +12,9 @@ export const Route = createFileRoute("/api/ai/railway-sandbox")({
           id: "repo-agent",
           provider: railwaySandbox({}),
           workspace: defineWorkspace({
-            source: githubRepo({ repo: "arackaf/tanstack-ai-sandboxes-blog-post" }),
+            source: githubRepo({
+              repo: "arackaf/tanstack-ai-sandboxes-blog-post",
+            }),
             setup: ["npm install"],
             secrets: createSecrets({
               ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY ?? "",
