@@ -44,7 +44,7 @@ function Admin() {
       </ul>
       {threadId ? <AgentChat threadId={threadId} /> : null}
       {agentCounts === 0 ? (
-        <button type="button" className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700" onClick={() => setAgentCounts(cnt => cnt - 1)}>
+        <button type="button" className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700" onClick={() => setAgentCounts(cnt => cnt + 1)}>
           New session
         </button>
       ) : (
