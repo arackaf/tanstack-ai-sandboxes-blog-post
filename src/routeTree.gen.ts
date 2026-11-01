@@ -14,6 +14,7 @@ import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
+import { Route as RubyRouteImport } from './routes/ruby'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
 import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
 
@@ -42,6 +43,11 @@ const JavascriptRoute = JavascriptRouteImport.update({
   path: '/javascript',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RubyRoute = RubyRouteImport.update({
+  id: '/ruby',
+  path: '/ruby',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiRailwaySandboxRoute = ApiAiRailwaySandboxRouteImport.update({
   id: '/api/ai/railway-sandbox',
   path: '/api/ai/railway-sandbox',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/ruby': typeof RubyRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/ruby': typeof RubyRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/ruby': typeof RubyRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/ruby'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/ruby'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/ruby'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
   JavascriptRoute: typeof JavascriptRoute
+  RubyRoute: typeof RubyRoute
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
   ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JavascriptRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ruby': {
+      id: '/ruby'
+      path: '/ruby'
+      fullPath: '/ruby'
+      preLoaderRoute: typeof RubyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/railway-sandbox': {
       id: '/api/ai/railway-sandbox'
       path: '/api/ai/railway-sandbox'
@@ -181,18 +201,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
+  RubyRoute: RubyRoute,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
   ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
