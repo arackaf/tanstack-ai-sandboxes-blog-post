@@ -109,11 +109,11 @@ const AgentChat: FC<AgentChatProps> = props => {
             <div key={message.id} className="w-1/2 self-end rounded-2xl bg-blue-100 px-4 py-2">
               {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
             </div>
-          ) : (
+          ) : message.parts.some(part => part.type === "text") ? (
             <div key={message.id} className="w-full">
               {message.parts.map((part, index) => (part.type === "text" ? <p key={index}>{part.content}</p> : null))}
             </div>
-          ),
+          ) : null,
         )}
         {isLoading && <Loader2 className="size-6 animate-spin text-muted-foreground" />}
       </div>
