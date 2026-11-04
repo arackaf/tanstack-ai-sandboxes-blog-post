@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdaRouteImport } from './routes/ada'
 import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
@@ -20,6 +21,11 @@ import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-s
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdaRoute = AdaRouteImport.update({
+  id: '/ada',
+  path: '/ada',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRailwayRoute = AdminRailwayRouteImport.update({
@@ -55,6 +61,7 @@ const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ada': typeof AdaRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ada'
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ada'
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ada'
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdaRoute: typeof AdaRoute
   AdminRailwayRoute: typeof AdminRailwayRoute
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ada': {
+      id: '/ada'
+      path: '/ada'
+      fullPath: '/ada'
+      preLoaderRoute: typeof AdaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin-railway': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdaRoute: AdaRoute,
   AdminRailwayRoute: AdminRailwayRoute,
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
@@ -187,12 +208,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
