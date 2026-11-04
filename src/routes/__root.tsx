@@ -1,9 +1,4 @@
-import {
-  HeadContent,
-  Link,
-  Scripts,
-  createRootRouteWithContext,
-} from "@tanstack/react-router";
+import { HeadContent, Link, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
@@ -52,20 +47,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <nav className="w-48 shrink-0 border-r border-gray-200 bg-gray-50 p-4">
             <ul className="flex flex-col gap-1">
               <li>
-                <Link
-                  to="/cpp"
-                  className="block rounded px-3 py-2 hover:bg-gray-200"
-                  activeProps={{ className: "bg-gray-200 font-semibold" }}
-                >
+                <Link to="/ada" className="block rounded px-3 py-2 hover:bg-gray-200" activeProps={{ className: "bg-gray-200 font-semibold" }}>
+                  Ada
+                </Link>
+              </li>
+              <li>
+                <Link to="/cpp" className="block rounded px-3 py-2 hover:bg-gray-200" activeProps={{ className: "bg-gray-200 font-semibold" }}>
                   C++
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/javascript"
-                  className="block rounded px-3 py-2 hover:bg-gray-200"
-                  activeProps={{ className: "bg-gray-200 font-semibold" }}
-                >
+                <Link to="/javascript" className="block rounded px-3 py-2 hover:bg-gray-200" activeProps={{ className: "bg-gray-200 font-semibold" }}>
                   JavaScript
                 </Link>
               </li>
