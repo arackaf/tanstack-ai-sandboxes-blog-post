@@ -10,10 +10,12 @@
     "generate-routes": "tsr generate",
     "build": "vite build",
     "format": "npx prettier --write \"src/**/*.{ts,tsx}\"",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "pg": "docker container run -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=docker -p 5432:5432 -v ~/Documents/pg-tanstack-ai-sandbox-blog-post:/var/lib/postgresql postgres:18.2-alpine3.23",
     "db-pull": "npx drizzle-kit pull",
-    "db-push": "npx drizzle-kit push"
+    "db-push": "npx drizzle-kit push",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -46,6 +48,7 @@
     "uuid": "^14.0.3"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.67.0",
     "@tanstack/devtools-vite": "0.8.5",
     "@tanstack/router-cli": "^1.132.0",
     "@types/node": "^22.10.2",
@@ -53,7 +56,8 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^6.0.2",
-    "vite": "^8.0.0"
+    "vite": "^8.0.0",
+    "wrangler": "^4.158.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
