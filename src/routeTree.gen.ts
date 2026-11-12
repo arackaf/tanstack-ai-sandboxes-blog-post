@@ -14,8 +14,10 @@ import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
+import { Route as ApiAgentRunsRouteImport } from './routes/api/agent/runs'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
 import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
+import { Route as ApiAgentRunsRunIdStreamRouteImport } from './routes/api/agent/runs/$runId/stream'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -42,6 +44,11 @@ const JavascriptRoute = JavascriptRouteImport.update({
   path: '/javascript',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentRunsRoute = ApiAgentRunsRouteImport.update({
+  id: '/api/agent/runs',
+  path: '/api/agent/runs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiRailwaySandboxRoute = ApiAiRailwaySandboxRouteImport.update({
   id: '/api/ai/railway-sandbox',
   path: '/api/ai/railway-sandbox',
@@ -52,6 +59,11 @@ const ApiAiVercelSandboxRoute = ApiAiVercelSandboxRouteImport.update({
   path: '/api/ai/vercel-sandbox',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentRunsRunIdStreamRoute = ApiAgentRunsRunIdStreamRouteImport.update({
+  id: '/$runId/stream',
+  path: '/$runId/stream',
+  getParentRoute: () => ApiAgentRunsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,8 +71,10 @@ export interface FileRoutesByFullPath {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/api/agent/runs': typeof ApiAgentRunsRouteWithChildren
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
+  '/api/agent/runs/$runId/stream': typeof ApiAgentRunsRunIdStreamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,8 +82,10 @@ export interface FileRoutesByTo {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/api/agent/runs': typeof ApiAgentRunsRouteWithChildren
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
+  '/api/agent/runs/$runId/stream': typeof ApiAgentRunsRunIdStreamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,8 +94,10 @@ export interface FileRoutesById {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/api/agent/runs': typeof ApiAgentRunsRouteWithChildren
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
+  '/api/agent/runs/$runId/stream': typeof ApiAgentRunsRunIdStreamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +107,10 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/api/agent/runs'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
+    | '/api/agent/runs/$runId/stream'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,8 +118,10 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/api/agent/runs'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
+    | '/api/agent/runs/$runId/stream'
   id:
     | '__root__'
     | '/'
@@ -107,8 +129,10 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/api/agent/runs'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
+    | '/api/agent/runs/$runId/stream'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,6 +141,7 @@ export interface RootRouteChildren {
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
   JavascriptRoute: typeof JavascriptRoute
+  ApiAgentRunsRoute: typeof ApiAgentRunsRouteWithChildren
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
   ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
 }
@@ -158,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JavascriptRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/agent/runs': {
+      id: '/api/agent/runs'
+      path: '/api/agent/runs'
+      fullPath: '/api/agent/runs'
+      preLoaderRoute: typeof ApiAgentRunsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/railway-sandbox': {
       id: '/api/ai/railway-sandbox'
       path: '/api/ai/railway-sandbox'
@@ -172,8 +204,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAiVercelSandboxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/agent/runs/$runId/stream': {
+      id: '/api/agent/runs/$runId/stream'
+      path: '/$runId/stream'
+      fullPath: '/api/agent/runs/$runId/stream'
+      preLoaderRoute: typeof ApiAgentRunsRunIdStreamRouteImport
+      parentRoute: typeof ApiAgentRunsRoute
+    }
   }
 }
+
+interface ApiAgentRunsRouteChildren {
+  ApiAgentRunsRunIdStreamRoute: typeof ApiAgentRunsRunIdStreamRoute
+}
+
+const ApiAgentRunsRouteChildren: ApiAgentRunsRouteChildren = {
+  ApiAgentRunsRunIdStreamRoute: ApiAgentRunsRunIdStreamRoute,
+}
+
+const ApiAgentRunsRouteWithChildren = ApiAgentRunsRoute._addFileChildren(
+  ApiAgentRunsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -181,6 +232,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
+  ApiAgentRunsRoute: ApiAgentRunsRouteWithChildren,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
   ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
 }

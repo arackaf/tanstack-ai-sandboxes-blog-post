@@ -4,6 +4,12 @@
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-11-04",
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
+  "services": [
+    {
+      "binding": "AI_SANDBOX",
+      "service": "snadbox-post-edge-agent-poc",
+    },
+  ],
 }
