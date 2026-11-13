@@ -3,7 +3,8 @@ import { railwaySandbox } from "@tanstack/ai-sandbox-railway";
 
 export const sandboxRailway = defineSandbox({
   id: "repo-agent",
-  provider: railwaySandbox({}),
+  // Workers throws "Illegal invocation" when fetch is called as a method of another object (the railway SDK does config.fetch(...))
+  provider: railwaySandbox({ fetch: (...args) => fetch(...args) }),
   workspace: defineWorkspace({
     source: githubRepo({
       repo: "arackaf/tanstack-ai-sandboxes-blog-post",
