@@ -1,8 +1,6 @@
 import { defineConfig } from "drizzle-kit";
 
-const connectionString = process.env.POSTGRES!;
-
-console.log({ connectionString });
+const connectionString = process.env.POSTGRES_PROD!;
 
 export default defineConfig({
   dialect: "postgresql",

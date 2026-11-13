@@ -10,23 +10,23 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/api/ai/vercel-sandbox")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: async ({ request, context }) => {
         const durability = memoryStream(request, { firstChunkDeadlineMs: 1000 * 5 });
         if (durability.resumeFrom() !== null) {
           return resumeServerSentEventsResponse({ adapter: durability });
         }
 
-        return reconstructChat(chatPersistence, request);
+        return reconstructChat(chatPersistence(context.db), request);
       },
-      POST: async ({ request }) => {
-        const { messages, threadId, runId } = await request.json();
+      POST: async ({ request, context }) => {
+        const { messages, threadId, runId } = (await request.json()) as any;
 
         const stream = chat({
           adapter: claudeCodeText("claude-opus-4-8"),
           messages,
           threadId,
           runId,
-          middleware: [withPersistence(chatPersistence), withSandbox(sandboxVercel)],
+          middleware: [withPersistence(chatPersistence(context.db)), withSandbox(sandboxVercel)],
         });
 
         return toServerSentEventsResponse(stream, {

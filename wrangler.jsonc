@@ -4,6 +4,15 @@
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-11-04",
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "860a0c1a13b341c3b763eac540cd02e3",
+    },
+  ],
+  "placement": {
+    "region": "aws:us-east-1",
+  },
 }

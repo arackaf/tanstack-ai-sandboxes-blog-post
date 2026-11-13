@@ -1,12 +1,10 @@
 import { and, asc, desc, eq, isNotNull, lte } from "drizzle-orm";
 import { defineAIPersistence } from "@tanstack/ai-persistence";
 import type { SQL } from "drizzle-orm";
-import type { ChatPersistence, InterruptRecord, InterruptStore, MessageStore, MetadataStore, RunRecord, RunStore } from "@tanstack/ai-persistence";
+import type { InterruptRecord, InterruptStore, MessageStore, MetadataStore, RunRecord, RunStore } from "@tanstack/ai-persistence";
 
-import { db } from "./db";
 import { chatInterrupts, chatMetadata, chatRuns, chatThreads } from "./schema";
-
-type Db = typeof db;
+import type { DB } from "./db";
 
 // Records omit absent optionals so they compare cleanly against the reference
 // in-memory backend.
@@ -49,7 +47,7 @@ function mapInterrupt(row: typeof chatInterrupts.$inferSelect): InterruptRecord 
   };
 }
 
-function createMessageStore(db: Db): MessageStore {
+function createMessageStore(db: DB): MessageStore {
   return {
     async loadThread(threadId) {
       const rows = await db.select({ messagesJson: chatThreads.messagesJson }).from(chatThreads).where(eq(chatThreads.threadId, threadId)).limit(1);
@@ -70,7 +68,7 @@ function createMessageStore(db: Db): MessageStore {
   };
 }
 
-function createRunStore(db: Db): RunStore {
+function createRunStore(db: DB): RunStore {
   async function get(runId: string) {
     const rows = await db.select().from(chatRuns).where(eq(chatRuns.runId, runId)).limit(1);
     const row = rows[0];
@@ -154,7 +152,7 @@ function createRunStore(db: Db): RunStore {
   };
 }
 
-function createInterruptStore(db: Db): InterruptStore {
+function createInterruptStore(db: DB): InterruptStore {
   // Every listing is ordered by requestedAt ascending.
   const listWhere = async (where: SQL | undefined) => {
     const rows = await db.select().from(chatInterrupts).where(where).orderBy(asc(chatInterrupts.requestedAt));
@@ -196,14 +194,14 @@ function createInterruptStore(db: Db): InterruptStore {
       const row = rows[0];
       return row ? mapInterrupt(row) : null;
     },
-    list: (threadId) => listWhere(eq(chatInterrupts.threadId, threadId)),
-    listPending: (threadId) => listWhere(and(eq(chatInterrupts.threadId, threadId), eq(chatInterrupts.status, "pending"))),
-    listByRun: (runId) => listWhere(eq(chatInterrupts.runId, runId)),
-    listPendingByRun: (runId) => listWhere(and(eq(chatInterrupts.runId, runId), eq(chatInterrupts.status, "pending"))),
+    list: threadId => listWhere(eq(chatInterrupts.threadId, threadId)),
+    listPending: threadId => listWhere(and(eq(chatInterrupts.threadId, threadId), eq(chatInterrupts.status, "pending"))),
+    listByRun: runId => listWhere(eq(chatInterrupts.runId, runId)),
+    listPendingByRun: runId => listWhere(and(eq(chatInterrupts.runId, runId), eq(chatInterrupts.status, "pending"))),
   };
 }
 
-function createMetadataStore(db: Db): MetadataStore {
+function createMetadataStore(db: DB): MetadataStore {
   return {
     async get(namespace, key) {
       const rows = await db
@@ -233,11 +231,12 @@ function createMetadataStore(db: Db): MetadataStore {
 }
 
 /** The four chat state stores backed by the app's Drizzle database. */
-export const chatPersistence: ChatPersistence = defineAIPersistence({
-  stores: {
-    messages: createMessageStore(db),
-    runs: createRunStore(db),
-    interrupts: createInterruptStore(db),
-    metadata: createMetadataStore(db),
-  },
-});
+export const chatPersistence = (db: DB) =>
+  defineAIPersistence({
+    stores: {
+      messages: createMessageStore(db),
+      runs: createRunStore(db),
+      interrupts: createInterruptStore(db),
+      metadata: createMetadataStore(db),
+    },
+  });

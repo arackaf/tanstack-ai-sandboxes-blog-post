@@ -15,7 +15,8 @@
     "db-pull": "npx drizzle-kit pull",
     "db-push": "npx drizzle-kit push",
     "deploy": "npm run build && wrangler deploy",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -37,11 +38,12 @@
     "@tanstack/react-router-devtools": "1.167.2",
     "@tanstack/react-router-ssr-query": "1.167.3",
     "@tanstack/react-start": "1.169.4",
+    "@types/pg": "^8.23.1",
     "drizzle-kit": "^1.0.0-rc.5",
     "drizzle-orm": "^1.0.0-rc.5",
     "lucide-react": "^1.62.0",
     "nitro": "3.0.260610-beta",
-    "postgres": "^4.0.0",
+    "pg": "^8.23.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18",
