@@ -76,11 +76,20 @@ const AgentChat: FC<AgentChatProps> = props => {
   const { onStart, threadId: threadIdProp } = props;
   const started = useRef(false);
   const [threadId] = useState<string>(() => threadIdProp || uuidv4());
+  const [sandboxState, setSandboxState] = useState("");
 
   const { messages, sendMessage, isLoading } = useChat({
     connection: fetchServerSentEvents("/api/ai/railway-sandbox"),
     threadId,
     persistence: true,
+    onCustomEvent: name => {
+      setSandboxState(name);
+      // if (name === 'sandbox.starting') {
+      //   setStarting(true)
+      // } else if (name === 'sandbox.created' || name === 'sandbox.resumed') {
+      //   setStarting(false)
+      // }
+    },
   });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -116,6 +125,7 @@ const AgentChat: FC<AgentChatProps> = props => {
           ) : null,
         )}
         {isLoading && <Loader2 className="size-6 animate-spin text-muted-foreground" />}
+        <p>{sandboxState || "No state"}</p>
       </div>
     </div>
   );
