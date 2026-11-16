@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
+import { Route as GoRouteImport } from './routes/go'
 import { Route as JavascriptRouteImport } from './routes/javascript'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
 import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
@@ -37,6 +38,11 @@ const CppRoute = CppRouteImport.update({
   path: '/cpp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GoRoute = GoRouteImport.update({
+  id: '/go',
+  path: '/go',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JavascriptRoute = JavascriptRouteImport.update({
   id: '/javascript',
   path: '/javascript',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
+  '/go': typeof GoRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
+  '/go': typeof GoRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
+  '/go': typeof GoRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
+    | '/go'
     | '/javascript'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
+    | '/go'
     | '/javascript'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/admin-railway'
     | '/admin-vercel'
     | '/cpp'
+    | '/go'
     | '/javascript'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AdminRailwayRoute: typeof AdminRailwayRoute
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
+  GoRoute: typeof GoRoute
   JavascriptRoute: typeof JavascriptRoute
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
   ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/go': {
+      id: '/go'
+      path: '/go'
+      fullPath: '/go'
+      preLoaderRoute: typeof GoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/javascript': {
       id: '/javascript'
       path: '/javascript'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRailwayRoute: AdminRailwayRoute,
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
+  GoRoute: GoRoute,
   JavascriptRoute: JavascriptRoute,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
   ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
@@ -187,13 +208,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
