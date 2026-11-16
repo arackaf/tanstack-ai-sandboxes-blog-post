@@ -69,6 +69,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   JavaScript
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/swift"
+                  className="block rounded px-3 py-2 hover:bg-gray-200"
+                  activeProps={{ className: "bg-gray-200 font-semibold" }}
+                >
+                  Swift
+                </Link>
+              </li>
             </ul>
           </nav>
           <main className="flex-1">{children}</main>
