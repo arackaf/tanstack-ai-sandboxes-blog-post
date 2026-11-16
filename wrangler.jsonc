@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tanstack-ai-sandboxes-blog-post",
-  "main": "@tanstack/react-start/server-entry",
+  "main": "src/server.ts",
   "compatibility_date": "2026-11-04",
   "observability": {
     "enabled": true,
@@ -10,6 +10,20 @@
     {
       "binding": "HYPERDRIVE",
       "id": "860a0c1a13b341c3b763eac540cd02e3",
+    },
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SANDBOX_REQUEST",
+        "class_name": "SandboxRequest",
+      },
+    ],
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["SandboxRequest"],
     },
   ],
   "placement": {
