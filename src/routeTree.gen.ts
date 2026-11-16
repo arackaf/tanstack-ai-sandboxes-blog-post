@@ -14,6 +14,7 @@ import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
 import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
+import { Route as KotlinRouteImport } from './routes/kotlin'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
 import { Route as ApiAiVercelSandboxRouteImport } from './routes/api/ai/vercel-sandbox'
 
@@ -42,6 +43,11 @@ const JavascriptRoute = JavascriptRouteImport.update({
   path: '/javascript',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KotlinRoute = KotlinRouteImport.update({
+  id: '/kotlin',
+  path: '/kotlin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiRailwaySandboxRoute = ApiAiRailwaySandboxRouteImport.update({
   id: '/api/ai/railway-sandbox',
   path: '/api/ai/railway-sandbox',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/kotlin': typeof KotlinRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/kotlin': typeof KotlinRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/admin-vercel': typeof AdminVercelRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
+  '/kotlin': typeof KotlinRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
   '/api/ai/vercel-sandbox': typeof ApiAiVercelSandboxRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/kotlin'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/kotlin'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/admin-vercel'
     | '/cpp'
     | '/javascript'
+    | '/kotlin'
     | '/api/ai/railway-sandbox'
     | '/api/ai/vercel-sandbox'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   AdminVercelRoute: typeof AdminVercelRoute
   CppRoute: typeof CppRoute
   JavascriptRoute: typeof JavascriptRoute
+  KotlinRoute: typeof KotlinRoute
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
   ApiAiVercelSandboxRoute: typeof ApiAiVercelSandboxRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JavascriptRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kotlin': {
+      id: '/kotlin'
+      path: '/kotlin'
+      fullPath: '/kotlin'
+      preLoaderRoute: typeof KotlinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/railway-sandbox': {
       id: '/api/ai/railway-sandbox'
       path: '/api/ai/railway-sandbox'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminVercelRoute: AdminVercelRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
+  KotlinRoute: KotlinRoute,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
   ApiAiVercelSandboxRoute: ApiAiVercelSandboxRoute,
 }
