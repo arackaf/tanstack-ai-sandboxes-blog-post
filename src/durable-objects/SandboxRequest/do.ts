@@ -15,6 +15,9 @@ const sandboxes = {
   "/vercel-request": sandboxVercel,
 } as const;
 
+// TEMP DEBUG: changes if the DO's module state gets recreated
+let isolateId: string | undefined;
+
 export class SandboxRequest extends DurableObject<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -26,6 +29,15 @@ export class SandboxRequest extends DurableObject<Env> {
     if (!sandbox) {
       return new Response("Not found", { status: 404 });
     }
+
+    isolateId ??= crypto.randomUUID().slice(0, 8);
+    console.log("[SandboxRequest DEBUG]", {
+      isolateId,
+      method: request.method,
+      url: request.url,
+      lastEventId: request.headers.get("Last-Event-ID"),
+      xRunId: request.headers.get("X-Run-Id"),
+    });
 
     const db = getDb(new Pool({ connectionString: this.env.HYPERDRIVE.connectionString }));
 
