@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRailwayRouteImport } from './routes/admin-railway'
 import { Route as AdminVercelRouteImport } from './routes/admin-vercel'
+import { Route as CRouteImport } from './routes/c'
 import { Route as CppRouteImport } from './routes/cpp'
 import { Route as JavascriptRouteImport } from './routes/javascript'
 import { Route as ApiAiRailwaySandboxRouteImport } from './routes/api/ai/railway-sandbox'
@@ -30,6 +31,11 @@ const AdminRailwayRoute = AdminRailwayRouteImport.update({
 const AdminVercelRoute = AdminVercelRouteImport.update({
   id: '/admin-vercel',
   path: '/admin-vercel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CRoute = CRouteImport.update({
+  id: '/c',
+  path: '/c',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CppRoute = CppRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
+  '/c': typeof CRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
+  '/c': typeof CRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin-railway': typeof AdminRailwayRoute
   '/admin-vercel': typeof AdminVercelRoute
+  '/c': typeof CRoute
   '/cpp': typeof CppRoute
   '/javascript': typeof JavascriptRoute
   '/api/ai/railway-sandbox': typeof ApiAiRailwaySandboxRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-railway'
     | '/admin-vercel'
+    | '/c'
     | '/cpp'
     | '/javascript'
     | '/api/ai/railway-sandbox'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-railway'
     | '/admin-vercel'
+    | '/c'
     | '/cpp'
     | '/javascript'
     | '/api/ai/railway-sandbox'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-railway'
     | '/admin-vercel'
+    | '/c'
     | '/cpp'
     | '/javascript'
     | '/api/ai/railway-sandbox'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRailwayRoute: typeof AdminRailwayRoute
   AdminVercelRoute: typeof AdminVercelRoute
+  CRoute: typeof CRoute
   CppRoute: typeof CppRoute
   JavascriptRoute: typeof JavascriptRoute
   ApiAiRailwaySandboxRoute: typeof ApiAiRailwaySandboxRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-vercel'
       fullPath: '/admin-vercel'
       preLoaderRoute: typeof AdminVercelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/c': {
+      id: '/c'
+      path: '/c'
+      fullPath: '/c'
+      preLoaderRoute: typeof CRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cpp': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRailwayRoute: AdminRailwayRoute,
   AdminVercelRoute: AdminVercelRoute,
+  CRoute: CRoute,
   CppRoute: CppRoute,
   JavascriptRoute: JavascriptRoute,
   ApiAiRailwaySandboxRoute: ApiAiRailwaySandboxRoute,
@@ -187,13 +208,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
