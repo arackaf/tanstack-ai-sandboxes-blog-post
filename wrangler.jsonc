@@ -3,6 +3,7 @@
   "name": "tanstack-ai-sandboxes-blog-post",
   "main": "src/server.ts",
   "compatibility_date": "2026-11-04",
+  "compatibility_flags": ["nodejs_compat", "disable_nodejs_console_module"],
   "observability": {
     "enabled": true,
   },
